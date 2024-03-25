@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34714.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabQ.JwtBearerGrant", "src\LabQ.JwtBearerGrant\LabQ.JwtBearerGrant.csproj", "{AF7445B0-B5AA-4E35-B1BC-4F5150D4FD92}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabQ.JwtBearerGrant.Test", "tests\LabQ.JwtBearerGrant.Test\LabQ.JwtBearerGrant.Test.csproj", "{FD48E150-7411-43D1-BCA8-18D6E1F6E2B6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0EBA6EBB-7194-48FA-8C99-FA726808D56D}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AF7445B0-B5AA-4E35-B1BC-4F5150D4FD92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF7445B0-B5AA-4E35-B1BC-4F5150D4FD92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF7445B0-B5AA-4E35-B1BC-4F5150D4FD92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF7445B0-B5AA-4E35-B1BC-4F5150D4FD92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD48E150-7411-43D1-BCA8-18D6E1F6E2B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD48E150-7411-43D1-BCA8-18D6E1F6E2B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD48E150-7411-43D1-BCA8-18D6E1F6E2B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD48E150-7411-43D1-BCA8-18D6E1F6E2B6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14805F93-867B-4FBD-881C-BBDB325E7791}
+	EndGlobalSection
+EndGlobal
