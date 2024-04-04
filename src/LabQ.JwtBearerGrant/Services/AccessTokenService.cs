@@ -10,14 +10,26 @@ using System.Text;
 using System.Text.Json;
 
 namespace LabQ.JwtBearerGrant.Services;
-public class AccessTokenService(
-    IAccessTokenStore accessTokenStore,
-    IOptions<JwtBearerGrantOptions> options,
-    IHttpClientFactory httpClientFactory) : IAccessTokenService
+public class AccessTokenService : IAccessTokenService
 {
-    private readonly IAccessTokenStore _accessTokenStore = accessTokenStore;
-    private readonly IOptions<JwtBearerGrantOptions> _options = options;
-    private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
+    private readonly IAccessTokenStore _accessTokenStore;
+    private readonly IOptions<JwtBearerGrantOptions> _options;
+    private readonly IHttpClientFactory _httpClientFactory;
+
+    public AccessTokenService(
+        IAccessTokenStore accessTokenStore,
+        IOptions<JwtBearerGrantOptions> options,
+        IHttpClientFactory httpClientFactory)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(options.Value.Issuer, nameof(options.Value.Issuer));
+        ArgumentException.ThrowIfNullOrWhiteSpace(options.Value.Audience, nameof(options.Value.Audience));
+        ArgumentException.ThrowIfNullOrWhiteSpace(options.Value.ClientId, nameof(options.Value.ClientId));
+        ArgumentException.ThrowIfNullOrWhiteSpace(options.Value.ClientSecret, nameof(options.Value.ClientSecret));
+
+        _accessTokenStore = accessTokenStore;
+        _options = options;
+        _httpClientFactory = httpClientFactory;
+    }
 
     public async Task<JwtBearerToken> GetTokenFor(string subject, IEnumerable<string> scopes)
     {
