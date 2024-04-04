@@ -12,6 +12,7 @@
     <PackageTags>oauth2,grant-type</PackageTags>
     <RepositoryUrl>https://github.com/taufikdev88/LabQ.JwtBearerGrant.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/taufikdev88/LabQ.JwtBearerGrant.git</PackageProjectUrl>
+	<Version>1.0.1</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
