@@ -13,6 +13,7 @@
     <RepositoryUrl>https://github.com/taufikdev88/LabQ.JwtBearerGrant.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/taufikdev88/LabQ.JwtBearerGrant.git</PackageProjectUrl>
 	<Version>1.0.1</Version>
+	<PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -20,6 +21,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Include="..\..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
