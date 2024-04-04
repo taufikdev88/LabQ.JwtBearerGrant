@@ -17,11 +17,11 @@ public class AccessTokenService(
     private readonly IOptions<JwtBearerGrantOptions> _options = options;
     private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
 
-    public async Task<string> GetAccessTokenFor(string subject, IEnumerable<string> scopes)
+    public async Task<JwtBearerToken> GetTokenFor(string subject, IEnumerable<string> scopes)
     {
         var token = await _accessTokenStore.GetLatestFor(subject);
         if (token != null && token.ExpiredAt < DateTime.UtcNow)
-            return token.AccessToken!;
+            return token!;
 
         var tokenId = Guid.NewGuid();
 
@@ -38,6 +38,13 @@ public class AccessTokenService(
             CreatedAt = DateTime.UtcNow,
             ExpiredAt = DateTime.UtcNow.AddMilliseconds(jwtToken.ExpiresIn)
         };
+
+        return token;
+    }
+
+    public async Task<string> GetAccessTokenFor(string subject, IEnumerable<string> scopes)
+    {
+        var token = await GetTokenFor(subject, scopes);
 
         return token.AccessToken!;
     }
