@@ -34,7 +34,7 @@ public class AccessTokenService : IAccessTokenService
     public async Task<JwtBearerToken> GetTokenFor(string subject, IEnumerable<string> scopes)
     {
         var token = await _accessTokenStore.GetLatestFor(subject);
-        if (token != null && token.ExpiredAt < DateTime.UtcNow)
+        if (token != null && token.ExpiredAt > DateTime.UtcNow)
             return token!;
 
         var tokenId = Guid.NewGuid();
