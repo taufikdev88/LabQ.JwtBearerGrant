@@ -53,6 +53,8 @@ public class AccessTokenService : IAccessTokenService
             ExpiredAt = DateTime.UtcNow.AddMilliseconds(jwtToken.ExpiresIn)
         };
 
+        await _accessTokenStore.Store(token);
+
         return token;
     }
 
