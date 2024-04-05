@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.4] - 2024-04-05
+
+### 🐛 Bug Fixes
+
+- Wrong token expiration calculation
+
 ## [1.0.3] - 2024-04-05
 
 ### 🐛 Bug Fixes

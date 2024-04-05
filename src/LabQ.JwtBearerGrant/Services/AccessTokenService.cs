@@ -50,7 +50,7 @@ public class AccessTokenService : IAccessTokenService
             Scope = jwtToken.Scope,
             TokenType = jwtToken.TokenType,
             CreatedAt = DateTime.UtcNow,
-            ExpiredAt = DateTime.UtcNow.AddMilliseconds(jwtToken.ExpiresIn)
+            ExpiredAt = DateTime.UtcNow.AddSeconds(jwtToken.ExpiresIn)
         };
 
         await _accessTokenStore.Store(token);
