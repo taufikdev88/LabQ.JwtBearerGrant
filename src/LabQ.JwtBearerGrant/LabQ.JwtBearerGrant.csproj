@@ -12,7 +12,7 @@
     <PackageTags>oauth2,grant-type</PackageTags>
     <RepositoryUrl>https://github.com/taufikdev88/LabQ.JwtBearerGrant.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/taufikdev88/LabQ.JwtBearerGrant.git</PackageProjectUrl>
-	<Version>1.0.7</Version>
+	<Version>1.0.8</Version>
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
