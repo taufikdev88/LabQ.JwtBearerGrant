@@ -5,7 +5,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Headers;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 
@@ -15,11 +14,13 @@ public class AccessTokenService : IAccessTokenService
     private readonly IAccessTokenStore _accessTokenStore;
     private readonly IOptions<JwtBearerGrantOptions> _options;
     private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IRSAFactory _rsaFactory;
 
     public AccessTokenService(
         IAccessTokenStore accessTokenStore,
         IOptions<JwtBearerGrantOptions> options,
-        IHttpClientFactory httpClientFactory)
+        IHttpClientFactory httpClientFactory,
+        IRSAFactory rsaFactory)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(options.Value.Issuer, nameof(options.Value.Issuer));
         ArgumentException.ThrowIfNullOrWhiteSpace(options.Value.Audience, nameof(options.Value.Audience));
@@ -29,6 +30,7 @@ public class AccessTokenService : IAccessTokenService
         _accessTokenStore = accessTokenStore;
         _options = options;
         _httpClientFactory = httpClientFactory;
+        _rsaFactory = rsaFactory;
     }
 
     public async Task<JwtBearerToken> GetTokenFor(string subject, IEnumerable<string> scopes)
@@ -65,20 +67,22 @@ public class AccessTokenService : IAccessTokenService
         return token.AccessToken!;
     }
 
-    private async Task<string> GenerateAssertion(Guid id, string subject, IEnumerable<string> scopes)
+    private async Task<JwtHeader> GenerateJwtHeader()
     {
         // read private key
         var certificate = await File.ReadAllTextAsync(_options.Value.GetFullPath());
 
         // read as rsa
-        using var rsa = RSA.Create();
+        using var rsa = _rsaFactory.CreateRSA();
         rsa.ImportFromPem(certificate);
 
-        // building header
         var securityKey = new RsaSecurityKey(rsa);
         var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.RsaSha256);
-        var jwtHeader = new JwtHeader(signingCredentials);
+        return new JwtHeader(signingCredentials);
+    }
 
+    private async Task<string> GenerateAssertion(Guid id, string subject, IEnumerable<string> scopes)
+    {
         // building payload
         var claims = new List<Claim>(scopes.Count() + 2)
         {
@@ -96,6 +100,7 @@ public class AccessTokenService : IAccessTokenService
             claims: claims);
 
         // generate token
+        var jwtHeader = await GenerateJwtHeader();
         var token = new JwtSecurityToken(jwtHeader, jwtPayload);
         var tokenHandler = new JwtSecurityTokenHandler();
 

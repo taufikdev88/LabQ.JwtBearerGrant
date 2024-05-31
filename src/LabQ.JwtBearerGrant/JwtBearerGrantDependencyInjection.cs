@@ -15,6 +15,7 @@ public static class JwtBearerGrantDependencyInjection
 
         services.TryAddScoped<IAccessTokenService, AccessTokenService>();
         services.TryAddScoped<IAccessTokenStore, MemoryCacheStore>();
+        services.TryAddScoped<IRSAFactory, DefaultRSAFactory>();
 
         return new JwtBearerGrantBuilder(services);
     }
