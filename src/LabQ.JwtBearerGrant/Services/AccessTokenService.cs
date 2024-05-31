@@ -67,20 +67,6 @@ public class AccessTokenService : IAccessTokenService
         return token.AccessToken!;
     }
 
-    private async Task<JwtHeader> GenerateJwtHeader()
-    {
-        // read private key
-        var certificate = await File.ReadAllTextAsync(_options.Value.GetFullPath());
-
-        // read as rsa
-        using var rsa = _rsaFactory.CreateRSA();
-        rsa.ImportFromPem(certificate);
-
-        var securityKey = new RsaSecurityKey(rsa);
-        var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.RsaSha256);
-        return new JwtHeader(signingCredentials);
-    }
-
     private async Task<string> GenerateAssertion(Guid id, string subject, IEnumerable<string> scopes)
     {
         // building payload
@@ -99,12 +85,24 @@ public class AccessTokenService : IAccessTokenService
             issuedAt: DateTime.UtcNow,
             claims: claims);
 
-        // generate token
-        var jwtHeader = await GenerateJwtHeader();
-        var token = new JwtSecurityToken(jwtHeader, jwtPayload);
-        var tokenHandler = new JwtSecurityTokenHandler();
+        // generate header 
+        // read private key
+        var certificate = await File.ReadAllTextAsync(_options.Value.GetFullPath());
 
-        return tokenHandler.WriteToken(token);
+        // read as rsa
+        using (var rsa = _rsaFactory.CreateRSA())
+        {
+            rsa.ImportFromPem(certificate);
+
+            var securityKey = new RsaSecurityKey(rsa);
+            var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.RsaSha256);
+            var jwtHeader = new JwtHeader(signingCredentials);
+
+            // generate token
+            var token = new JwtSecurityToken(jwtHeader, jwtPayload);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            return tokenHandler.WriteToken(token);
+        }
     }
 
     private async Task<AccessTokenResponse> ExchangeWithToken(string assertion, IEnumerable<string> scopes)
