@@ -15,7 +15,6 @@ dotnet add package LabQ.JwtBearerGrant
 
 👤 **Taufik Hidayat**
 
-* Github: [@taufikdev88](https://github.com/taufikdev88)
 * LinkedIn: [@taufikdev88](https://linkedin.com/in/taufikdev88)
 
 ## Show your support
